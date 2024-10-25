@@ -248,6 +248,26 @@
 
 
 		/* Air */
+		.accordion--item {
+			transition-property: flex-basis, background-size, padding;
+		}
+
+		.accordion--item, .bottom-temp {
+			transition-duration: var(--def-transition-duration);
+			transition-timing-function: ease-in-out;
+		}
+
+		.accordion--item:hover:not(.opened) .bottom-temp {
+			transform: translate3d(0, -1rem, 0);
+		}
+
+		.bottom-temp {
+			transition-property: transform, opacity;
+		}
+
+		.opened .bottom-temp {
+			transform: translate3d(0, 2rem, 0);
+		}
 		/* In the video I'm using the following icons and imagery: */
 		/* - https://elements.envato.com/photo-realistic-weather-icon-set-K7MGJ3 */
 		/* - https://elements.envato.com/weather-icon-pack-3UHW3R3 */
@@ -453,11 +473,11 @@
 
 		accordionsItems.forEach(item => {
 			item.addEventListener('click', () => {
-				accordionsItems.forEach(item => {
+				accordionsItems.forEach(item => { // remove opened class from all accordion li elements
 					item.classList.remove('opened')
 				})
 
-				item.classList.add('opened')
+				item.classList.add('opened') // add the opened class to only the clicked one
 			})
 		})
 	</script>

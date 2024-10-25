@@ -150,6 +150,29 @@
 		}
 
 		/* Air */
+		#luna {
+			background-image: url(illustrations/luna-walking-sequence@c.svg);
+		}
+
+		.card figure {
+			width: 190px;
+			height: 320px;
+			/* border:1px solid; */
+			background-repeat: none;
+			background-size: cover;
+		}
+	
+		.card.selected figure {
+			animation: .3s linear infinite walking;
+		}
+
+		@keyframes walking {
+			to {
+				background-position: 100%;
+			}
+		}
+		
+
 		/* You can download the walking sequences you saw in the video using the links below */
 		/* - https://elements.envato.com/animation-of-girl-walking-S4WXEK8 */
 		/* - https://elements.envato.com/animation-of-boy-walking-7H3QTE3 */

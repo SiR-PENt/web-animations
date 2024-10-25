@@ -211,13 +211,21 @@
 		}
 
 		figure footer img {
-			
+			transform: translate3d(-3rem, 0, 0) rotate(360deg);
+			transition-delay: var(--def-transition-duration);
+			opacity: 0;
 		}
 
-		figcaption::before, figure a img, figure main, figure footer {
+		figure:hover footer img {
+			transform: translate3d(0, 0, 0) rotate(0);
+			opacity: 1;
+		}
+
+		figcaption::before, figure a img, figure main, figure footer, figure footer img {
 			transition-duration: var(--def-transition-duration);
 			transition-timing-function: ease-in-out;
 		}
+
 
 	</style>
 </head>

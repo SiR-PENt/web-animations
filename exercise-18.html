@@ -32,6 +32,7 @@
 		body {
 			background-color: var(--gray);
 			font-size: 1.125rem;
+			overflow-x: hidden;
 		}
 
 		p {
@@ -226,6 +227,25 @@
 		}
 
 		/* Air */
+		html.lenis, html.lenis body {
+          height: auto;
+        }
+
+       .lenis.lenis-smooth {
+          scroll-behavior: auto !important;
+        }
+
+       .lenis.lenis-smooth [data-lenis-prevent] {
+          overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+          overflow: hidden;
+        }
+
+       .lenis.lenis-smooth iframe {
+         pointer-events: none;
+        }
 	</style>
 </head>
 <body>
@@ -318,6 +338,84 @@
 	<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
 	<script>
 		// Air
+		const entries = document.querySelectorAll('.entry')
+
+		entries.forEach(entry => {
+			let entryMeta = entry.querySelector('.entry__meta');
+			let entryMedia = entry.querySelector('.entry__media')
+
+			gsap.set(entryMeta, {
+				xPercent: -100,
+				opacity: 0
+			})
+
+			gsap.set(entryMedia, {
+				xPercent: 100,
+				opacity: 0
+			})
+
+			// gsap.to(entryMeta, {
+			// 	scrollTrigger: {
+			// 		trigger: entry,
+			// 		start: 'top bottom', // this implies that when the top of entryMeta gets to the bottom of the page, the animation starts
+			// 		end: 'bottom 90%', // and when the bottom gets to 90% of the page, it ends 
+			// 		markers: true,
+			// 		scrub: true, // animates depending on where the cursor is
+			// 	},
+			// 	xPercent: 0,
+			// 	opacity: 1,
+			// })
+
+			// gsap.to(entryMedia, {
+			// 	scrollTrigger: {
+			// 		trigger: entry,
+			// 		start: 'top bottom',
+			// 		end: 'bottom 90%',
+			// 		markers: true,
+			// 		scrub: true,
+			// 	},
+			// 	xPercent: 0,
+			// 	opacity: 1,
+			// })
+
+			let tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: entry,
+					start: 'top bottom', // this implies that when the top of entryMeta gets to the bottom of the page, the animation starts
+					end: 'bottom 90%', // and when the bottom gets to 90% of the page, it ends 
+					markers: true,
+					scrub: true, // animates depending on where the cursor is
+				}
+			})
+
+			tl.fromTo(entryMeta, { xPercent: -100, opacity: 0 }, { xPercent: -100, opacity: 1 });
+			tl.fromTo(entryMedia, { xPercent: 100, opacity: 0 }, { xPercent: -100, opacity: 1 }, '<');
+		})
+
+
+
+
+
+		// Initialize a new Lenis instance for smooth scrolling
+			const lenis = new Lenis();
+
+			// Listen for the 'scroll' event and log the event data to the console
+			lenis.on('scroll', (e) => {
+				console.log(e);
+			});
+
+			// Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
+			lenis.on('scroll', ScrollTrigger.update);
+
+			// Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
+			// This ensures Lenis's smooth scroll animation updates on each GSAP tick
+			gsap.ticker.add((time) => {
+				lenis.raf(time * 1000); // Convert time from seconds to milliseconds
+			});
+
+			// Disable lag smoothing in GSAP to prevent any delay in scroll animations
+			gsap.ticker.lagSmoothing(0);
+
 	</script>
 </body>
 </html>
